@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f8f5ef">
+  <meta name="description" content="Discover beautiful gold, silver, diamond and bridal jewellery at SHREE JEWELLERS, Rayagada, Odisha.">
+
+  <title>SHREE JEWELLERS | Where Tradition Meets Elegance</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement">
+    <span>SHREE JEWELLERS · RAYAGADA, ODISHA</span>
+
+    <a href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS"
+       target="_blank" rel="noopener">
+      ENQUIRE ON WHATSAPP ↗
+    </a>
+  </div>
+
+
+  <!-- HEADER -->
+  <header class="site-header" id="siteHeader">
+
+    <nav class="nav-side nav-left">
+      <a href="#about">ABOUT US</a>
+      <a href="#collections">COLLECTIONS</a>
+    </nav>
+
+    <a class="brand" href="#home">
+      <img
+        src="assets/images/shree-jewellers-logo.png"
+        alt="SHREE JEWELLERS Logo">
+    </a>
+
+    <nav class="nav-side nav-right">
+      <a href="#services">SERVICES</a>
+      <a href="#contact">CONTACT</a>
+      <a href="https://www.instagram.com/" target="_blank" rel="noopener">
+        INSTAGRAM
+      </a>
+    </nav>
+
+    <button class="menu-toggle" id="menuToggle"
+      aria-label="Open navigation menu"
+      aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+  </header>
+
+
+  <!-- MOBILE MENU -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="#about">About Us</a>
+    <a href="#collections">Collections</a>
+    <a href="#rates">Gold & Silver Rates</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact</a>
+
+    <a href="https://wa.me/919437141499"
+       target="_blank" rel="noopener">
+      WhatsApp Us
+    </a>
+  </nav>
+
+
+  <main>
+
+    <!-- HOMEPAGE VIDEO -->
+    <section class="hero" id="home">
+
+      <video class="hero-video"
+        autoplay muted loop playsinline
+        poster="assets/images/hero-poster.jpg">
+
+        <source
+          src="assets/videos/homepage-jewellery.mp4"
+          type="video/mp4">
+
+      </video>
+
+      <div class="hero-shade"></div>
+
+      <div class="hero-content">
+
+        <p class="eyebrow">
+          TIMELESS BEAUTY · TRUSTED CRAFTSMANSHIP
+        </p>
+
+        <h1>
+          Every Jewellery<br>
+          <em>Tells Your Story</em>
+        </h1>
+
+        <p class="hero-copy">
+          Discover pieces made to celebrate your most beautiful moments.
+        </p>
+
+        <a class="button button-gold" href="#collections">
+          EXPLORE COLLECTION <span>↗</span>
+        </a>
+
+      </div>
+
+      <div class="hero-bottom">
+        <span>SHREE JEWELLERS</span>
+        <span>WHERE TRADITION MEETS ELEGANCE</span>
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+    <section class="intro section-pad" id="about">
+
+      <p class="section-kicker">A LEGACY OF ELEGANCE</p>
+
+      <h2>
+        Jewellery that becomes<br>
+        <em>part of your story.</em>
+      </h2>
+
+      <p class="intro-copy">
+        From everyday elegance to unforgettable celebrations,
+        explore jewellery that reflects your style, your traditions
+        and your special moments.
+      </p>
+
+      <a class="text-link" href="#contact">
+        VISIT OUR SHOWROOM <span>↗</span>
+      </a>
+
+    </section>
+
+
+    <!-- GOLD AND SILVER RATES -->
+    <section class="rates-section section-pad" id="rates">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="section-kicker">MARKET UPDATE</p>
+
+          <h2>
+            Gold & Silver <em>Rates</em>
+          </h2>
+
+          <p class="muted">
+            IBJA benchmark rates · Indicative reference prices
+          </p>
+        </div>
+
+        <button class="refresh-button" id="refreshRates" type="button">
+          ↻ Refresh rates
+        </button>
+
+      </div>
+
+
+      <div class="rate-grid">
+
+        <article class="rate-card">
+          <span class="rate-metal">24K GOLD · 999</span>
+          <strong class="rate-value" id="gold24">Loading…</strong>
+          <span class="rate-unit">per gram</span>
+        </article>
+
+        <article class="rate-card">
+          <span class="rate-metal">22K GOLD · 916</span>
+          <strong class="rate-value" id="gold22">Loading…</strong>
+          <span class="rate-unit">per gram</span>
+        </article>
+
+        <article class="rate-card">
+          <span class="rate-metal">SILVER · 999</span>
+          <strong class="rate-value" id="silverGram">Loading…</strong>
+          <span class="rate-unit">per gram</span>
+        </article>
+
+        <article class="rate-card">
+          <span class="rate-metal">SILVER · 999</span>
+          <strong class="rate-value" id="silverKg">Loading…</strong>
+          <span class="rate-unit">per kilogram</span>
+        </article>
+
+      </div>
+
+      <div class="rate-footer">
+        <span id="rateStatus" role="status" aria-live="polite">
+          Connecting to rate provider…
+        </span>
+
+        <span id="rateUpdated">
+          Rates are checked by the provider periodically.
+        </span>
+      </div>
+
+      <p class="rate-note">
+        Rates are based on IBJA benchmark data and are shown for reference.
+        GST, making charges and local showroom pricing may differ.
+        Please confirm the final rate with SHREE JEWELLERS before purchase.
+      </p>
+
+    </section>
+
+
+    <!-- COLLECTIONS -->
+    <section class="collections-section section-pad" id="collections">
+
+      <div class="section-heading">
+
+        <div>
+          <p class="section-kicker">FIND YOUR SIGNATURE</p>
+          <h2>Our <em>Collections</em></h2>
+        </div>
+
+        <p class="heading-note">
+          Designed for moments<br>
+          that matter.
+        </p>
+
+      </div>
+
+
+      <div class="collection-grid">
+
+        <a class="collection-card collection-large" href="#contact">
+
+          <img
+            src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?auto=format&fit=crop&w=1000&q=85"
+            alt="Gold jewellery"
+            loading="lazy">
+
+          <span class="collection-caption">
+            <small>01 / TIMELESS CLASSICS</small>
+            <strong>Gold Jewellery</strong>
+          </span>
+
+        </a>
+
+
+        <a class="collection-card" href="#contact">
+
+          <img
+            src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&w=900&q=85"
+            alt="Diamond jewellery"
+            loading="lazy">
+
+          <span class="collection-caption">
+            <small>02 / BRILLIANT DETAILS</small>
+            <strong>Diamond</strong>
+          </span>
+
+        </a>
+
+
+        <a class="collection-card" href="#contact">
+
+          <img
+            src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=900&q=85"
+            alt="Rings"
+            loading="lazy">
+
+          <span class="collection-caption">
+            <small>03 / YOUR SPECIAL DAY</small>
+            <strong>Rings</strong>
+          </span>
+
+        </a>
+
+
+        <a class="collection-card" href="#contact">
+
+          <img
+            src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=900&q=85"
+            alt="Bangles"
+            loading="lazy">
+
+          <span class="collection-caption">
+            <small>04 / TRADITION REIMAGINED</small>
+            <strong>Bangles</strong>
+          </span>
+
+        </a>
+
+
+        <a class="collection-card" href="#contact">
+
+          <img
+            src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&w=900&q=85"
+            alt="Necklaces and pendants"
+            loading="lazy">
+
+          <span class="collection-caption">
+            <small>05 / EVERYDAY ELEGANCE</small>
+            <strong>Necklaces & Pendants</strong>
+          </span>
+
+        </a>
+
+      </div>
+
+      <p class="image-disclaimer">
+        Collection photographs are illustrative. Contact the showroom
+        for actual designs and availability.
+      </p>
+
+    </section>
+
+
+    <!-- BANNER -->
+    <section class="quote-section">
+
+      <div class="quote-overlay"></div>
+
+      <div class="quote-content">
+
+        <p class="section-kicker">MADE FOR YOUR MOMENTS</p>
+
+        <h2>
+          Celebrate the moments.<br>
+          <em>Keep the memories.</em>
+        </h2>
+
+        <a class="button button-outline"
+           href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS"
+           target="_blank" rel="noopener">
+          DISCOVER WITH US ↗
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- SERVICES -->
+    <section class="services-section section-pad" id="services">
+
+      <p class="section-kicker">HERE FOR EVERY OCCASION</p>
+
+      <h2>
+        Personal service.<br>
+        <em>Beautiful experiences.</em>
+      </h2>
+
+
+      <div class="service-grid">
+
+        <article>
+          <span>01</span>
+          <h3>Personal Assistance</h3>
+          <p>
+            Get help choosing jewellery for your style,
+            occasion and budget.
+          </p>
+        </article>
+
+        <article>
+          <span>02</span>
+          <h3>Bridal Enquiries</h3>
+          <p>
+            Speak with our team about jewellery for your
+            wedding celebrations.
+          </p>
+        </article>
+
+        <article>
+          <span>03</span>
+          <h3>Product Enquiries</h3>
+          <p>
+            Ask about designs, purity, availability
+            and product details.
+          </p>
+        </article>
+
+      </div>
+
+
+      <a class="text-link"
+         href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS%2C%20I%20would%20like%20assistance."
+         target="_blank" rel="noopener">
+        CHAT WITH OUR TEAM <span>↗</span>
+      </a>
+
+    </section>
+
+
+    <!-- CONTACT -->
+    <section class="contact-section section-pad" id="contact">
+
+      <div class="contact-copy">
+
+        <p class="section-kicker">WE WOULD LOVE TO MEET YOU</p>
+
+        <h2>
+          Find something<br>
+          <em>you'll treasure.</em>
+        </h2>
+
+        <p>
+          Visit SHREE JEWELLERS in Rayagada, Odisha,
+          or contact us directly for assistance and product enquiries.
+        </p>
+
+        <a class="button button-dark"
+           href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS%2C%20I%20would%20like%20to%20visit%20your%20showroom."
+           target="_blank" rel="noopener">
+          WHATSAPP US ↗
+        </a>
+
+      </div>
+
+
+      <div class="contact-details">
+
+        <div>
+          <small>SHOWROOM</small>
+          <p>Rayagada, Odisha, India</p>
+        </div>
+
+        <div>
+          <small>PHONE / WHATSAPP</small>
+
+          <p>
+            <a href="tel:+919437141499">
+              +91 94371 41499
+            </a>
+          </p>
+
+          <a class="contact-link"
+             href="https://wa.me/919437141499"
+             target="_blank" rel="noopener">
+            START A WHATSAPP CHAT ↗
+          </a>
+        </div>
+
+        <div>
+          <small>LOCATION</small>
+          <p>Rayagada, Odisha</p>
+
+          <a class="contact-link"
+             href="https://www.google.com/maps/search/?api=1&query=SHREE+JEWELLERS+Rayagada+Odisha"
+             target="_blank" rel="noopener">
+            FIND US ON GOOGLE MAPS ↗
+          </a>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+
+    <a href="#home" class="footer-brand">
+      SHREE <span>JEWELLERS</span>
+    </a>
+
+    <p>Where Tradition Meets Elegance</p>
+
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#collections">Collections</a>
+      <a href="#rates">Rates</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+    <p class="copyright">
+      © <span id="year"></span> SHREE JEWELLERS. All rights reserved.
+    </p>
+
+  </footer>
+
+
+  <!-- FLOATING WHATSAPP -->
+  <a class="whatsapp-float"
+     href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS%2C%20I%20need%20some%20information."
+     target="_blank" rel="noopener"
+     aria-label="Chat with SHREE JEWELLERS on WhatsApp">
+
+    <span class="wa-icon">◉</span>
+    <span>WhatsApp</span>
+
+  </a>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
