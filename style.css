@@ -407,21 +407,22 @@ img, video {
 
 .gold-collection {
   background-image: linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.1)),
-  url("images/jewellery-photo-1.jpg");
+  url("assets/images/jewellery-photo-1.jpg");
 }
 
 .diamond-collection {
   background-image: linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.1)),
-  url("images/jewellery-photo-3.jpg");
+  url("assets/images/jewellery-photo-3.jpg");
 }
 
 .bridal-collection {
   background-image: linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.1)),
-  url("images/jewellery-photo-2.jpg");
+  url("assets/images/jewellery-photo-2.jpg");
 }
 
 .silver-collection {
-  background-image: linear-gradient(135deg, #ded6c9, #8c8175);
+  background-image: linear-gradient(rgba(0,0,0,.05), rgba(0,0,0,.1)),
+  url("assets/images/jewellery-photo-3.jpg");
 }
 
 .collection-card:hover .collection-image {
@@ -458,7 +459,7 @@ img, video {
 .quote-banner {
   min-height: 370px;
   background: linear-gradient(rgba(32, 23, 16, .79), rgba(32, 23, 16, .79)),
-  url("images/jewellery-photo-2.jpg") center 45% / cover;
+  url("assets/images/jewellery-photo-2.jpg") center 45% / cover;
   display: flex;
   justify-content: center;
   align-items: center;
