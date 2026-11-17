@@ -1,286 +1,233 @@
 
-const WHATSAPP_NUMBER = "919437141499";
-
-const BULLION_API =
-  "https://api.dharun.dev/v1/bullion";
-
-
-// MOBILE MENU
-
-const menuToggle =
-  document.getElementById("menuToggle");
-
-const mobileNav =
-  document.getElementById("mobileNav");
-
-const siteHeader =
-  document.getElementById("siteHeader");
+/* =========================================
+   SHREE JEWELLERS - COMPLETE WEBSITE JS
+========================================= */
 
 
-menuToggle?.addEventListener("click", () => {
+/* MOBILE NAVIGATION */
 
-  const isOpen =
-    mobileNav.classList.toggle("open");
+const menuToggle = document.getElementById("menuToggle");
+const mobileNav = document.getElementById("mobileNav");
 
-  menuToggle.setAttribute(
-    "aria-expanded",
-    String(isOpen)
-  );
+if (menuToggle && mobileNav) {
 
-  menuToggle.setAttribute(
-    "aria-label",
-    isOpen
-      ? "Close navigation menu"
-      : "Open navigation menu"
-  );
+  menuToggle.addEventListener("click", () => {
 
-});
+    const isOpen = mobileNav.classList.toggle("open");
 
-
-mobileNav?.querySelectorAll("a").forEach(link => {
-
-  link.addEventListener("click", () => {
-
-    mobileNav.classList.remove("open");
-
-    menuToggle?.setAttribute(
-      "aria-expanded",
-      "false"
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation" : "Open navigation"
     );
 
   });
 
-});
+  mobileNav.querySelectorAll("a").forEach(link => {
 
-
-// HEADER SHADOW
-
-window.addEventListener("scroll", () => {
-
-  siteHeader?.classList.toggle(
-    "scrolled",
-    window.scrollY > 12
-  );
-
-}, { passive: true });
-
-
-// COPYRIGHT YEAR
-
-document.getElementById("year").textContent =
-  new Date().getFullYear();
-
-
-// GOLD AND SILVER RATE HELPERS
-
-function collectRateRecords(value, output = [], depth = 0) {
-
-  if (depth > 7 || value == null) {
-    return output;
-  }
-
-  if (Array.isArray(value)) {
-
-    value.forEach(item =>
-      collectRateRecords(item, output, depth + 1)
-    );
-
-    return output;
-  }
-
-  if (typeof value === "object") {
-
-    const keys = Object.keys(value)
-      .map(key => key.toLowerCase());
-
-    const hasRate = keys.some(key =>
-      /rate|price|per_gram|pergram|per_10g|per_kg|perkg/.test(key)
-    );
-
-    const labelText = keys.join(" ");
-
-    if (
-      hasRate ||
-      /gold|silver|999|916|995|750/.test(labelText)
-    ) {
-      output.push(value);
-    }
-
-    Object.values(value).forEach(item => {
-
-      if (item && typeof item === "object") {
-        collectRateRecords(item, output, depth + 1);
-      }
-
+    link.addEventListener("click", () => {
+      mobileNav.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.setAttribute("aria-label", "Open navigation");
     });
 
+  });
+
+}
+
+
+/* STICKY HEADER */
+
+const siteHeader = document.getElementById("siteHeader");
+
+function updateHeader() {
+
+  if (siteHeader) {
+    siteHeader.classList.toggle("scrolled", window.scrollY > 30);
   }
 
-  return output;
+}
+
+window.addEventListener("scroll", updateHeader);
+updateHeader();
+
+
+/* COPYRIGHT YEAR */
+
+const currentYear = document.getElementById("currentYear");
+
+if (currentYear) {
+  currentYear.textContent = new Date().getFullYear();
 }
 
 
-function normaliseKey(value) {
+/* =========================================
+   CINEMATIC JEWELLERY VIDEO BANNER
+========================================= */
 
-  return String(value ?? "")
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
+const heroVideo = document.getElementById("heroVideo");
+const heroMusic = document.getElementById("heroMusic");
+const musicToggle = document.getElementById("musicToggle");
+
+const jewelleryClips = [
+  "assets/videos/bridal-model.mp4",
+  "assets/videos/bridal-gold.mp4",
+  "assets/videos/gold-diamond-closeup.mp4"
+];
+
+let activeClip = 0;
+let isChangingClip = false;
+
+
+/* Play the next video after the current video ends */
+
+function playNextJewelleryClip() {
+
+  if (!heroVideo || isChangingClip) return;
+
+  isChangingClip = true;
+
+  activeClip = (activeClip + 1) % jewelleryClips.length;
+
+  heroVideo.classList.add("changing");
+
+  setTimeout(() => {
+
+    heroVideo.src = jewelleryClips[activeClip];
+    heroVideo.load();
+
+    heroVideo.play()
+      .then(() => {
+        heroVideo.classList.remove("changing");
+        isChangingClip = false;
+      })
+      .catch(error => {
+        console.warn("Video could not autoplay:", error);
+        heroVideo.classList.remove("changing");
+        isChangingClip = false;
+      });
+
+  }, 700);
 
 }
 
 
-function numericFrom(record, keys) {
+if (heroVideo) {
 
-  for (const [key, value] of Object.entries(record || {})) {
+  heroVideo.addEventListener("ended", playNextJewelleryClip);
 
-    if (keys.includes(normaliseKey(key))) {
+  heroVideo.addEventListener("error", () => {
+    console.error(
+      "Homepage video could not load. Please check the video filename and folder."
+    );
+  });
 
-      const number = Number(
-        String(value).replace(/[₹,\s]/g, "")
-      );
+  heroVideo.addEventListener("loadeddata", () => {
+    if (heroVideo.paused) {
+      heroVideo.play().catch(() => {
+        console.log("Browser requires a user action to play the video.");
+      });
+    }
+  });
 
-      if (Number.isFinite(number) && number > 0) {
-        return number;
+}
+
+
+/* =========================================
+   BACKGROUND MUSIC CONTROL
+========================================= */
+
+if (musicToggle && heroMusic) {
+
+  musicToggle.addEventListener("click", async () => {
+
+    if (heroMusic.paused) {
+
+      try {
+
+        await heroMusic.play();
+        musicToggle.textContent = "♫ Turn Music Off";
+        musicToggle.setAttribute("aria-pressed", "true");
+
+      } catch (error) {
+
+        musicToggle.textContent = "Music unavailable";
+        console.error("Background music could not play:", error);
+
       }
 
+    } else {
+
+      heroMusic.pause();
+      musicToggle.textContent = "♫ Turn Music On";
+      musicToggle.setAttribute("aria-pressed", "false");
+
     }
-
-  }
-
-  return null;
-}
-
-
-function recordText(record) {
-
-  return Object.entries(record || {})
-    .map(([key, value]) => `${key} ${value}`)
-    .join(" ")
-    .toLowerCase();
-
-}
-
-
-function findRate(records, metal, purity) {
-
-  const matches = records.filter(record => {
-
-    const text = recordText(record);
-
-    const hasMetal =
-      text.includes(metal);
-
-    const hasPurity =
-      new RegExp(`(^|[^0-9])${purity}([^0-9]|$)`)
-        .test(text);
-
-    return hasMetal && hasPurity;
 
   });
 
-  return matches[0] || null;
-
 }
 
 
-function getDisplayRate(record, metal, unit) {
+/* =========================================
+   GOLD AND SILVER RATE SECTION
 
-  if (!record) {
-    return null;
+   External API: dharun.dev
+   Verify API response and terms before relying
+   on these values for business transactions.
+========================================= */
+
+const RATE_API = "https://api.dharun.dev/v1/bullion";
+
+const gold24Element = document.getElementById("gold24");
+const gold22Element = document.getElementById("gold22");
+const silverElement = document.getElementById("silverRate");
+const silverKgElement = document.getElementById("silverKg");
+const rateStatus = document.getElementById("rateStatus");
+const refreshRatesButton = document.getElementById("refreshRates");
+
+
+/* Find a numeric value in different possible API formats */
+
+function findNumericValue(object, possibleKeys) {
+
+  if (!object || typeof object !== "object") return null;
+
+  const normalizedKeys = possibleKeys.map(key =>
+    key.toLowerCase().replace(/[^a-z0-9]/g, "")
+  );
+
+  for (const [key, value] of Object.entries(object)) {
+
+    const normalizedKey = key.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+    if (
+      normalizedKeys.includes(normalizedKey) &&
+      typeof value === "number" &&
+      Number.isFinite(value)
+    ) {
+      return value;
+    }
+
+    if (
+      normalizedKeys.includes(normalizedKey) &&
+      typeof value === "string" &&
+      value.trim() !== "" &&
+      Number.isFinite(Number(value))
+    ) {
+      return Number(value);
+    }
+
   }
 
-  const gramKeys = [
-    "pricepergram",
-    "ratepergram",
-    "pergram",
-    "gramrate",
-    "pricegram",
-    "rategram"
-  ];
+  for (const value of Object.values(object)) {
 
-  const tenGramKeys = [
-    "priceper10g",
-    "rateper10g",
-    "per10g",
-    "priceper10grams",
-    "rateper10grams"
-  ];
+    if (value && typeof value === "object") {
 
-  const kgKeys = [
-    "priceperkg",
-    "rateperkg",
-    "perkg",
-    "kilogramrate",
-    "priceperkilogram",
-    "rateperkilogram"
-  ];
+      const found = findNumericValue(value, possibleKeys);
 
-  const generalKeys = [
-    "rate",
-    "price",
-    "value",
-    "amount",
-    "benchmarkrate",
-    "benchmarkprice"
-  ];
+      if (found !== null) return found;
 
-  const gram = numericFrom(record, gramKeys);
-  const tenGram = numericFrom(record, tenGramKeys);
-  const kg = numericFrom(record, kgKeys);
-  const general = numericFrom(record, generalKeys);
-
-
-  if (unit === "gram") {
-
-    if (gram) return gram;
-
-    if (metal === "silver" && kg) {
-      return kg / 1000;
-    }
-
-    if (tenGram) {
-      return tenGram / 10;
-    }
-
-    if (general) {
-
-      const text = recordText(record);
-
-      if (
-        text.includes("kg") ||
-        text.includes("kilogram")
-      ) {
-        return general / 1000;
-      }
-
-      if (
-        text.includes("10g") ||
-        text.includes("10 gram")
-      ) {
-        return general / 10;
-      }
-
-      return general;
-    }
-
-  } else {
-
-    if (kg) return kg;
-
-    if (gram) return gram * 1000;
-
-    if (general) {
-
-      const text = recordText(record);
-
-      if (
-        text.includes("gram") &&
-        !text.includes("kilogram")
-      ) {
-        return general * 1000;
-      }
-
-      return general;
     }
 
   }
@@ -290,197 +237,120 @@ function getDisplayRate(record, metal, unit) {
 }
 
 
-// FORMAT INDIAN CURRENCY
+/* Display Indian currency */
 
-function formatINR(value) {
+function formatRupees(value) {
 
-  return new Intl.NumberFormat("en-IN", {
-
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 2
-
-  }).format(value);
-
-}
-
-
-// DISPLAY RATE
-
-function setRate(id, value) {
-
-  const element =
-    document.getElementById(id);
-
-  if (element) {
-
-    element.textContent =
-      value == null
-        ? "Unavailable"
-        : formatINR(value);
-
+  if (value === null || !Number.isFinite(value)) {
+    return "Unavailable";
   }
 
+  return "₹" + value.toLocaleString("en-IN", {
+    maximumFractionDigits: 2
+  });
+
 }
 
 
-// LOAD LIVE RATES
+/* Load the latest available rates */
 
 async function loadMetalRates() {
 
-  const status =
-    document.getElementById("rateStatus");
+  if (!rateStatus) return;
 
-  const updated =
-    document.getElementById("rateUpdated");
-
-  const refresh =
-    document.getElementById("refreshRates");
-
-
-  if (status) {
-    status.textContent = "Updating rates…";
+  if (refreshRatesButton) {
+    refreshRatesButton.disabled = true;
+    refreshRatesButton.textContent = "Checking...";
   }
 
-  if (refresh) {
-    refresh.disabled = true;
-  }
-
+  rateStatus.textContent = "Checking latest available rates...";
 
   try {
 
-    const response = await fetch(BULLION_API, {
-
+    const response = await fetch(RATE_API, {
       method: "GET",
-
       headers: {
         "Accept": "application/json"
       },
-
       cache: "no-store"
-
     });
 
-
-    const body = await response.json();
-
-
     if (!response.ok) {
-
-      throw new Error(
-        body?.error?.message ||
-        "Rate provider request failed"
-      );
-
+      throw new Error("Rate provider returned an error.");
     }
 
+    const data = await response.json();
 
-    const records =
-      collectRateRecords(body.data ?? body);
+    /*
+      These key names are possible examples.
+      The provider's actual JSON structure must be
+      verified for accurate live rate display.
+    */
 
+    const gold24 = findNumericValue(data, [
+      "gold24",
+      "gold24k",
+      "gold_24k",
+      "24k",
+      "gold_999",
+      "gold999"
+    ]);
 
-    const gold24Record =
-      findRate(records, "gold", "999");
+    const gold22 = findNumericValue(data, [
+      "gold22",
+      "gold22k",
+      "gold_22k",
+      "22k",
+      "gold_916",
+      "gold916"
+    ]);
 
-    const gold22Record =
-      findRate(records, "gold", "916");
+    const silver = findNumericValue(data, [
+      "silver",
+      "silver999",
+      "silver_999",
+      "silver_rate"
+    ]);
 
-    const silverRecord =
-      findRate(records, "silver", "999");
-
-
-    const gold24 =
-      getDisplayRate(gold24Record, "gold", "gram");
-
-    const gold22 =
-      getDisplayRate(gold22Record, "gold", "gram");
-
-    const silverGram =
-      getDisplayRate(silverRecord, "silver", "gram");
-
-    const silverKg =
-      getDisplayRate(silverRecord, "silver", "kg");
-
-
-    setRate("gold24", gold24);
-    setRate("gold22", gold22);
-    setRate("silverGram", silverGram);
-    setRate("silverKg", silverKg);
-
-
-    const anyRate = [
-      gold24,
-      gold22,
-      silverGram,
-      silverKg
-    ].some(value => value != null);
-
-
-    if (!anyRate) {
-
-      throw new Error(
-        "Provider response format could not be matched."
-      );
-
+    if (
+      gold24 === null ||
+      gold22 === null ||
+      silver === null
+    ) {
+      throw new Error("The rate provider data format could not be verified.");
     }
 
+    /*
+      Values must be rupees per gram.
+      Do not display rates with an unverified unit.
+    */
 
-    if (status) {
+    gold24Element.textContent = formatRupees(gold24);
+    gold22Element.textContent = formatRupees(gold22);
+    silverElement.textContent = formatRupees(silver);
+    silverKgElement.textContent =
+      "Per kg: " + formatRupees(silver * 1000);
 
-      status.textContent =
-        "Rates loaded from IBJA benchmark data.";
-
-    }
-
-
-    const retrieved =
-      body?.meta?.retrieved_at ||
-      body?.meta?.retrieved ||
-      body?.meta?.updated_at;
-
-
-    if (updated) {
-
-      updated.textContent = retrieved
-        ? `Provider retrieval: ${new Date(retrieved).toLocaleString("en-IN")}`
-        : `Checked: ${new Date().toLocaleString("en-IN")}`;
-
-    }
-
+    rateStatus.textContent =
+      "Rates checked: " + new Date().toLocaleString("en-IN");
 
   } catch (error) {
 
-    setRate("gold24", null);
-    setRate("gold22", null);
-    setRate("silverGram", null);
-    setRate("silverKg", null);
+    console.error("Metal rate error:", error);
 
+    if (gold24Element) gold24Element.textContent = "Unavailable";
+    if (gold22Element) gold22Element.textContent = "Unavailable";
+    if (silverElement) silverElement.textContent = "Unavailable";
+    if (silverKgElement) silverKgElement.textContent = "Per kg: Unavailable";
 
-    if (status) {
-
-      status.textContent =
-        "Live rates are temporarily unavailable. Please try again.";
-
-    }
-
-
-    if (updated) {
-
-      updated.textContent =
-        "No sample or estimated prices are displayed.";
-
-    }
-
-
-    console.error(
-      "Bullion rate error:",
-      error
-    );
+    rateStatus.textContent =
+      "Live rates are currently unavailable. Please check again later.";
 
   } finally {
 
-    if (refresh) {
-      refresh.disabled = false;
+    if (refreshRatesButton) {
+      refreshRatesButton.disabled = false;
+      refreshRatesButton.textContent = "↻ Refresh Rates";
     }
 
   }
@@ -488,48 +358,20 @@ async function loadMetalRates() {
 }
 
 
-// REFRESH BUTTON
+/* Refresh rates when the visitor clicks */
 
-document
-  .getElementById("refreshRates")
-  ?.addEventListener("click", loadMetalRates);
+if (refreshRatesButton) {
+
+  refreshRatesButton.addEventListener("click", loadMetalRates);
+
+}
 
 
-// LOAD RATES ON PAGE OPEN
+/* Load rates when the page opens */
 
 loadMetalRates();
 
 
-// AUTOMATIC REFRESH EVERY HOUR
+/* Refresh every hour */
 
-setInterval(
-  loadMetalRates,
-  60 * 60 * 1000
-);
-
-
-// WHATSAPP LINKS
-
-document
-  .querySelectorAll('a[href*="wa.me/"]')
-  .forEach(link => {
-
-    const url = new URL(link.href);
-
-    url.pathname = `/${WHATSAPP_NUMBER}`;
-
-    link.href = url.toString();
-
-  });
-
-
-// VIDEO FALLBACK
-
-const heroVideo =
-  document.querySelector(".hero-video");
-
-heroVideo?.addEventListener("error", () => {
-
-  heroVideo.style.display = "none";
-
-});
+setInterval(loadMetalRates, 60 * 60 * 1000);
