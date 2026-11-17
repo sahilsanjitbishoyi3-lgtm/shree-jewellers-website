@@ -704,23 +704,85 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // -------------------------------------------
-  // 18. GOLD AND SILVER RATE PLACEHOLDER
-  // -------------------------------------------
+  // 18. LIVE GOLD AND SILVER MARKET RATES
+  // Indicative INR spot rates from XAUS. Jewellery store prices may differ.
 
   const refreshRates = document.getElementById("refreshRates");
   const rateStatus = document.getElementById("rateStatus");
+  const gold24Element = document.getElementById("gold24");
+  const gold22Element = document.getElementById("gold22");
+  const silverElement = document.getElementById("silverRate");
 
-  if (refreshRates) {
+  const inrFormatter = new Intl.NumberFormat("en-IN", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0
+  });
 
-    refreshRates.addEventListener("click", () => {
+  async function loadMetalRates() {
+    if (!gold24Element || !gold22Element || !silverElement) return;
 
-      if (rateStatus) {
-        rateStatus.textContent =
-          "Live market data source is not connected yet. Please contact the store for today's rates.";
+    if (refreshRates) {
+      refreshRates.disabled = true;
+      refreshRates.textContent = "Loading...";
+    }
+    if (rateStatus) rateStatus.textContent = "Fetching latest indicative market rates...";
+
+    try {
+      const response = await fetch(
+        "https://xaus.com/api/v1/spot?currency=INR&unit=gram&compact=1",
+        { method: "GET", cache: "no-store" }
+      );
+      if (!response.ok) throw new Error("Rate service returned HTTP " + response.status);
+
+      const data = await response.json();
+      const gold24 = Number(data?.xau?.price);
+      const silverUsdPerOunce = Number(data?.silver_usd_oz);
+      const usdToInr = Number(data?.fx_rate);
+
+      if (!Number.isFinite(gold24) || gold24 <= 0 ||
+          !Number.isFinite(silverUsdPerOunce) || silverUsdPerOunce <= 0 ||
+          !Number.isFinite(usdToInr) || usdToInr <= 0) {
+        throw new Error("The rate service did not return complete price data.");
       }
 
-    });
+      const gold22 = gold24 * (22 / 24);
+      const silverPerGram = (silverUsdPerOunce * usdToInr) / 31.1034768;
+
+      gold24Element.textContent = inrFormatter.format(gold24);
+      gold22Element.textContent = inrFormatter.format(gold22);
+      silverElement.textContent = inrFormatter.format(silverPerGram);
+
+      const updatedAt = data.price_as_of || data.data_state?.as_of || data.updated_at;
+      const updatedText = updatedAt
+        ? new Date(updatedAt).toLocaleString("en-IN", {
+            dateStyle: "medium",
+            timeStyle: "short"
+          })
+        : "time not provided";
+      const freshness = data.data_state?.status === "stale"
+        ? " (last available market data)"
+        : "";
+      if (rateStatus) {
+        rateStatus.textContent = "Indicative spot rates · Updated: " + updatedText + freshness;
+      }
+    } catch (error) {
+      console.error("Could not load gold and silver rates:", error);
+      if (rateStatus) {
+        rateStatus.textContent = "Rates could not be loaded right now. Please try Refresh Rates or contact the store.";
+      }
+    } finally {
+      if (refreshRates) {
+        refreshRates.disabled = false;
+        refreshRates.textContent = "↻ Refresh Rates";
+      }
+    }
   }
+
+  if (refreshRates) {
+    refreshRates.addEventListener("click", loadMetalRates);
+  }
+  loadMetalRates();
 
   // -------------------------------------------
   // 19. IMAGE ERROR HANDLING
