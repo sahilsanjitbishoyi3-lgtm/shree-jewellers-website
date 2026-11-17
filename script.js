@@ -134,45 +134,48 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // 5. CINEMATIC VIDEO PLAYBACK
-  // -------------------------------------------
+  // Keep bridal-model.mp4 as the only hero video.
+  // Autoplay the two showcase videos silently when they enter view.
 
   const heroVideo = document.getElementById("heroVideo");
 
-  const heroVideos = [
-    "assets/videos/bridal-model.mp4",
-    "assets/videos/bridal-gold.mp4",
-    "assets/videos/gold-diamond-closeup.mp4"
-  ];
-
   if (heroVideo) {
-
-    let currentVideo = 0;
-
     heroVideo.muted = true;
+    heroVideo.loop = true;
     heroVideo.playsInline = true;
-
-    heroVideo.addEventListener("ended", () => {
-      currentVideo = (currentVideo + 1) % heroVideos.length;
-      heroVideo.src = heroVideos[currentVideo];
-      heroVideo.load();
-
-      const playback = heroVideo.play();
-
-      if (playback) {
-        playback.catch(() => {});
-      }
-    });
-
-    heroVideo.addEventListener("error", () => {
-      console.warn("A hero video could not be loaded.");
-    });
-
-    const initialPlayback = heroVideo.play();
-
-    if (initialPlayback) {
-      initialPlayback.catch(() => {});
-    }
+    const heroPlayback = heroVideo.play();
+    if (heroPlayback) heroPlayback.catch(() => {});
   }
+
+  const showcaseVideos = document.querySelectorAll(".showcase-video-grid video");
+
+  showcaseVideos.forEach(video => {
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.autoplay = true;
+
+    const playShowcaseVideo = () => {
+      const playback = video.play();
+      if (playback) playback.catch(() => {});
+    };
+
+    if ("IntersectionObserver" in window) {
+      const videoObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            playShowcaseVideo();
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+
+      videoObserver.observe(video);
+    } else {
+      playShowcaseVideo();
+    }
+  });
 
   // -------------------------------------------
   // 6. PRODUCT SEARCH
