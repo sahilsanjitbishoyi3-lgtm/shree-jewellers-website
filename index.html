@@ -4,355 +4,493 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Discover beautiful gold, diamond and silver jewellery at SHREE JEWELLERS, Rayagada, Odisha.">
   <meta name="theme-color" content="#f8f5ef">
-
+  <meta name="description" content="Discover timeless gold, diamond, bridal and silver jewellery at SHREE JEWELLERS, Rayagada.">
   <title>SHREE JEWELLERS | Where Tradition Meets Elegance</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+  <!-- Announcement -->
   <div class="announcement-bar">
-    Celebrate every special moment with SHREE JEWELLERS
+    <span>✦</span> Timeless Elegance. Beautiful Traditions. <span>✦</span>
   </div>
 
-  <!-- HEADER -->
+  <!-- Header -->
   <header class="site-header" id="siteHeader">
     <div class="header-inner">
 
-      <nav class="nav-left" aria-label="Main navigation">
-        <a href="#about">ABOUT US</a>
-        <a href="#collections">COLLECTIONS</a>
+      <nav class="nav-left">
+        <a href="#about">About Us</a>
+        <a href="#collections">Collections</a>
       </nav>
 
-      <a href="#home" class="brand-logo" aria-label="SHREE JEWELLERS Home">
-        <img src="assets/images/shree-jewellers-logo.png" alt="SHREE JEWELLERS Logo">
+      <a href="#home" class="brand-logo">
+        <img src="assets/images/shree-jewellers-logo.png"
+             alt="SHREE JEWELLERS Logo">
       </a>
 
-      <nav class="nav-right" aria-label="Additional navigation">
-        <a href="#services">SERVICES</a>
-        <a href="https://www.instagram.com/shree_jewellers_0909/" target="_blank" rel="noopener noreferrer">INSTAGRAM</a>
+      <nav class="nav-right">
+        <a href="#services">Services</a>
+        <a href="https://www.instagram.com/shree_jewellers_0909/"
+           target="_blank" rel="noopener">Instagram</a>
       </nav>
 
-      <button class="menu-toggle" id="menuToggle" type="button"
-        aria-label="Open navigation" aria-expanded="false">
-        <span></span>
-        <span></span>
-        <span></span>
+      <button class="menu-toggle" id="menuToggle"
+              aria-label="Open navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
-
     </div>
 
-    <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
-      <a href="#about">ABOUT US</a>
-      <a href="#collections">COLLECTIONS</a>
-      <a href="#rates">GOLD & SILVER RATES</a>
-      <a href="#services">SERVICES</a>
-      <a href="#instagram">INSTAGRAM</a>
-      <a href="#contact">CONTACT</a>
+    <nav class="mobile-nav" id="mobileNav">
+      <a href="#about">About Us</a>
+      <a href="#collections">Collections</a>
+      <a href="#services">Services</a>
+      <a href="#rates">Gold & Silver Rates</a>
+      <a href="#contact">Contact</a>
+      <a href="https://www.instagram.com/shree_jewellers_0909/"
+         target="_blank" rel="noopener">Instagram</a>
     </nav>
   </header>
 
   <main>
 
-    <!-- HERO VIDEO -->
+    <!-- Cinematic Hero -->
     <section class="cinematic-hero" id="home">
-
-      <video id="heroVideo" class="hero-video"
-        autoplay muted playsinline loop preload="metadata"
-        poster="assets/images/shree-jewellers-logo.png">
+      <video class="hero-video" id="heroVideo"
+             autoplay muted playsinline preload="auto">
         <source src="assets/videos/bridal-model.mp4" type="video/mp4">
-        Your browser does not support video.
       </video>
 
       <div class="hero-shade"></div>
 
       <div class="cinematic-content">
-        <p class="hero-eyebrow">SHREE JEWELLERS PRESENTS</p>
-
-        <h1>Where Tradition<br>Meets Elegance</h1>
-
+        <p class="hero-eyebrow">THE ART OF FINE JEWELLERY</p>
+        <h1>Where Tradition<br>Meets <em>Elegance</em></h1>
         <p class="hero-description">
-          Discover the brilliance of timeless gold, diamond and
-          silver jewellery. Crafted to celebrate your most
-          beautiful moments.
+          Discover jewellery that celebrates your beauty,
+          your traditions and your unforgettable moments.
         </p>
-
         <a href="#collections" class="hero-button">
-          EXPLORE COLLECTIONS
+          EXPLORE COLLECTIONS <span>→</span>
         </a>
       </div>
 
       <div class="hero-bottom">
-        <span class="hero-caption">THE ART OF FINE JEWELLERY</span>
-
-        <button id="musicToggle" class="music-toggle"
-          type="button" aria-pressed="false">
-          ♫ Turn Music On
+        <span class="hero-caption">CRAFTED FOR YOUR SPECIAL MOMENTS</span>
+        <button class="music-toggle" id="musicToggle"
+                aria-pressed="false">
+          <span id="musicIcon">♫</span>
+          <span id="musicText">MUSIC OFF</span>
         </button>
       </div>
 
       <audio id="heroMusic" loop preload="none">
-        <source src="assets/audio/jewellery-background.mp3" type="audio/mpeg">
+        <source src="assets/audio/jewellery-background.mp3"
+                type="audio/mpeg">
       </audio>
-
     </section>
 
-    <!-- ABOUT -->
-    <section class="intro-section" id="about">
-      <div class="section-title">
-        <p class="eyebrow">WELCOME TO SHREE JEWELLERS</p>
-
-        <h2>Jewellery That Tells<br>Your Story</h2>
-
-        <div class="gold-line"></div>
-
-        <p class="intro-description">
-          Every piece of jewellery holds a special meaning.
-          At SHREE JEWELLERS, discover timeless designs that
-          celebrate beauty, tradition and unforgettable moments.
-        </p>
-
-        <a href="#contact" class="text-link">DISCOVER OUR STORY →</a>
-      </div>
+    <!-- About -->
+    <section class="intro-section reveal" id="about">
+      <p class="eyebrow">OUR STORY</p>
+      <h2 class="section-heading">
+        Jewellery That Tells<br><em>Your Story</em>
+      </h2>
+      <div class="gold-line"></div>
+      <p class="intro-description">
+        At SHREE JEWELLERS, we believe every piece of jewellery
+        holds a special memory. Explore timeless designs that
+        bring together beauty, tradition and elegance.
+      </p>
+      <a href="#contact" class="text-link">DISCOVER OUR WORLD →</a>
     </section>
 
-    <!-- COLLECTIONS -->
-    <section class="collections-section" id="collections">
-
+    <!-- Collections -->
+    <section class="collections-section reveal" id="collections">
       <div class="section-title">
         <p class="eyebrow">EXPLORE OUR WORLD</p>
-        <h2>Our Collections</h2>
-        <div class="gold-line"></div>
+        <h2>Our <em>Collections</em></h2>
         <p>Find the perfect expression of your style.</p>
       </div>
 
       <div class="collection-grid">
-
-        <article class="collection-card">
-          <img src="https://images.unsplash.com/photo-1611652022419-a9419f74343d?w=900&q=85"
-            alt="Gold jewellery collection" loading="lazy">
+        <a href="#gallery" class="collection-card">
+          <div class="collection-image gold-collection"></div>
           <div class="collection-overlay">
+            <span>01</span>
             <h3>Gold Jewellery</h3>
-            <a href="#contact">ENQUIRE NOW →</a>
+            <p>TIMELESS BEAUTY</p>
           </div>
-        </article>
+        </a>
 
-        <article class="collection-card">
-          <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=900&q=85"
-            alt="Diamond jewellery collection" loading="lazy">
+        <a href="#gallery" class="collection-card">
+          <div class="collection-image diamond-collection"></div>
           <div class="collection-overlay">
+            <span>02</span>
             <h3>Diamond Jewellery</h3>
-            <a href="#contact">ENQUIRE NOW →</a>
+            <p>ETERNAL BRILLIANCE</p>
           </div>
-        </article>
+        </a>
 
-        <article class="collection-card">
-          <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?w=900&q=85"
-            alt="Bridal jewellery collection" loading="lazy">
+        <a href="#gallery" class="collection-card">
+          <div class="collection-image bridal-collection"></div>
           <div class="collection-overlay">
+            <span>03</span>
             <h3>Bridal Collection</h3>
-            <a href="#contact">ENQUIRE NOW →</a>
+            <p>MADE FOR FOREVER</p>
           </div>
-        </article>
+        </a>
 
-        <article class="collection-card">
-          <img src="https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=900&q=85"
-            alt="Silver jewellery collection" loading="lazy">
+        <a href="#gallery" class="collection-card">
+          <div class="collection-image silver-collection"></div>
           <div class="collection-overlay">
+            <span>04</span>
             <h3>Silver Jewellery</h3>
-            <a href="#contact">ENQUIRE NOW →</a>
+            <p>SUBTLE SOPHISTICATION</p>
           </div>
-        </article>
-
+        </a>
       </div>
     </section>
 
-    <!-- QUOTE -->
+    <!-- Brand Quote -->
     <section class="quote-banner">
       <div class="quote-content">
-        <p class="eyebrow">BEAUTY THAT LASTS FOREVER</p>
-        <h2>Timeless Elegance.<br>Unforgettable Memories.</h2>
+        <p>“</p>
+        <h2>Some moments deserve<br>to shine <em>forever.</em></h2>
+        <span>SHREE JEWELLERS</span>
       </div>
     </section>
 
-    <!-- RATES -->
-    <section class="rates-section" id="rates">
-
+    <!-- Jewellery Gallery -->
+    <section class="gallery-section reveal" id="gallery">
       <div class="section-title">
-        <p class="eyebrow">TODAY'S MARKET INDICATION</p>
-        <h2>Gold & Silver Rates</h2>
-        <div class="gold-line"></div>
-        <p>Indicative bullion benchmark rates in Indian Rupees.</p>
+        <p class="eyebrow">A WORLD OF BEAUTY</p>
+        <h2>Discover Our <em>Jewellery</em></h2>
+        <p>Explore selected jewellery inspirations.</p>
       </div>
 
-      <div class="rates-grid">
+      <div class="gallery-toolbar">
+        <div class="search-box">
+          <input type="search" id="productSearch"
+                 placeholder="Search jewellery...">
+          <span>⌕</span>
+        </div>
 
-        <article class="rate-card">
-          <span class="rate-purity">999 PURITY</span>
-          <h3>24K Gold</h3>
-          <p class="rate-price" id="gold24">Loading...</p>
-          <span class="rate-unit">Per gram</span>
+        <div class="filter-buttons" id="filterButtons">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="gold">Gold</button>
+          <button class="filter-btn" data-filter="diamond">Diamond</button>
+          <button class="filter-btn" data-filter="bridal">Bridal</button>
+        </div>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+
+        <article class="product-card" data-category="gold"
+                 data-name="Traditional Gold Jewellery">
+          <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+          <button class="product-image" data-image="assets/images/jewellery-photo-1.jpg"
+                  aria-label="View gold jewellery">
+            <img src="assets/images/jewellery-photo-1.jpg"
+                 alt="Gold jewellery design" loading="lazy">
+            <span class="zoom-label">VIEW DETAILS ↗</span>
+          </button>
+          <div class="product-info">
+            <p>GOLD COLLECTION</p>
+            <h3>Traditional Gold Jewellery</h3>
+            <button class="enquiry-btn" data-product="Traditional Gold Jewellery">
+              ENQUIRE ON WHATSAPP →
+            </button>
+          </div>
         </article>
 
-        <article class="rate-card featured-rate">
-          <span class="rate-purity">916 PURITY</span>
-          <h3>22K Gold</h3>
-          <p class="rate-price" id="gold22">Loading...</p>
-          <span class="rate-unit">Per gram</span>
+        <article class="product-card" data-category="bridal"
+                 data-name="Bridal Jewellery Inspiration">
+          <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+          <button class="product-image" data-image="assets/images/jewellery-photo-2.jpg"
+                  aria-label="View bridal jewellery">
+            <img src="assets/images/jewellery-photo-2.jpg"
+                 alt="Bridal jewellery design" loading="lazy">
+            <span class="zoom-label">VIEW DETAILS ↗</span>
+          </button>
+          <div class="product-info">
+            <p>BRIDAL COLLECTION</p>
+            <h3>Bridal Jewellery Inspiration</h3>
+            <button class="enquiry-btn" data-product="Bridal Jewellery Inspiration">
+              ENQUIRE ON WHATSAPP →
+            </button>
+          </div>
         </article>
 
-        <article class="rate-card">
-          <span class="rate-purity">999 PURITY</span>
-          <h3>Silver</h3>
-          <p class="rate-price" id="silverRate">Loading...</p>
-          <span class="rate-unit">Per gram</span>
-          <p class="silver-kg" id="silverKg">Per kg: --</p>
+        <article class="product-card" data-category="diamond"
+                 data-name="Elegant Jewellery Design">
+          <button class="wishlist-btn" aria-label="Add to wishlist">♡</button>
+          <button class="product-image" data-image="assets/images/jewellery-photo-3.jpg"
+                  aria-label="View jewellery design">
+            <img src="assets/images/jewellery-photo-3.jpg"
+                 alt="Elegant jewellery design" loading="lazy">
+            <span class="zoom-label">VIEW DETAILS ↗</span>
+          </button>
+          <div class="product-info">
+            <p>DIAMOND COLLECTION</p>
+            <h3>Elegant Jewellery Design</h3>
+            <button class="enquiry-btn" data-product="Elegant Jewellery Design">
+              ENQUIRE ON WHATSAPP →
+            </button>
+          </div>
         </article>
 
       </div>
 
-      <div class="rate-footer">
-        <p id="rateStatus" aria-live="polite">Checking latest available rates...</p>
-        <button id="refreshRates" class="refresh-button" type="button">
-          ↻ Refresh Rates
-        </button>
-      </div>
-
-      <p class="rate-disclaimer">
-        Indicative benchmark rates only. GST, making charges and other
-        applicable charges are excluded. Actual showroom prices may differ.
+      <p class="gallery-note">
+        Images are jewellery inspirations. Contact us for current designs,
+        availability and pricing.
+      </p>
+      <p class="empty-message" id="emptyMessage" hidden>
+        No matching jewellery found.
       </p>
     </section>
 
-    <!-- SERVICES -->
-    <section class="services-section" id="services">
-
+    <!-- Wishlist -->
+    <section class="wishlist-section reveal" id="wishlist">
       <div class="section-title">
-        <p class="eyebrow">THE SHREE JEWELLERS EXPERIENCE</p>
-        <h2>Our Services</h2>
-        <div class="gold-line"></div>
+        <p class="eyebrow">YOUR PERSONAL COLLECTION</p>
+        <h2>Your <em>Wishlist</em> <span id="wishlistCount">(0)</span></h2>
+        <p>Keep your favourite designs close.</p>
+      </div>
+      <div id="wishlistItems" class="wishlist-items">
+        <p class="empty-wishlist">Your wishlist is waiting for something beautiful.</p>
+      </div>
+    </section>
+
+    <!-- Video Showcase -->
+    <section class="video-section reveal" id="showcase">
+      <div class="section-title">
+        <p class="eyebrow">BEAUTY IN EVERY DETAIL</p>
+        <h2>The Art of <em>Jewellery</em></h2>
+      </div>
+
+      <div class="showcase-video-grid">
+        <video controls muted playsinline preload="metadata">
+          <source src="assets/videos/bridal-gold.mp4" type="video/mp4">
+        </video>
+        <video controls muted playsinline preload="metadata">
+          <source src="assets/videos/gold-diamond-closeup.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+
+    <!-- Rates -->
+    <section class="rates-section reveal" id="rates">
+      <div class="section-title">
+        <p class="eyebrow">TODAY'S MARKET INFORMATION</p>
+        <h2>Gold & Silver <em>Rates</em></h2>
+        <p>Check indicative market rates before making an enquiry.</p>
+      </div>
+
+      <div class="rates-grid">
+        <div class="rate-card">
+          <span class="rate-purity">24K GOLD</span>
+          <h3 id="gold24">Unavailable</h3>
+          <span>Per gram</span>
+        </div>
+        <div class="rate-card featured-rate">
+          <span class="rate-purity">22K GOLD</span>
+          <h3 id="gold22">Unavailable</h3>
+          <span>Per gram</span>
+        </div>
+        <div class="rate-card">
+          <span class="rate-purity">SILVER</span>
+          <h3 id="silverRate">Unavailable</h3>
+          <span>Per gram</span>
+        </div>
+      </div>
+
+      <div class="rate-footer">
+        <p id="rateStatus">Live rate source not connected.</p>
+        <button class="refresh-button" id="refreshRates">↻ Refresh Rates</button>
+      </div>
+      <p class="rate-disclaimer">
+        Rates are subject to market changes. Final jewellery prices may
+        include making charges, taxes and other applicable costs.
+        Please confirm the latest rate with the store.
+      </p>
+    </section>
+
+    <!-- Gift Finder -->
+    <section class="gift-section reveal" id="giftFinder">
+      <div class="section-title">
+        <p class="eyebrow">A LITTLE SOMETHING SPECIAL</p>
+        <h2>Find a Gift for <em>Every Occasion</em></h2>
+        <p>Choose an occasion and let us help you find something beautiful.</p>
+      </div>
+      <div class="gift-options">
+        <button data-gift="Wedding">Wedding</button>
+        <button data-gift="Anniversary">Anniversary</button>
+        <button data-gift="Birthday">Birthday</button>
+        <button data-gift="Festival">Festival</button>
+        <button data-gift="Engagement">Engagement</button>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section class="services-section reveal" id="services">
+      <div class="section-title">
+        <p class="eyebrow">A PERSONAL TOUCH</p>
+        <h2>Our <em>Services</em></h2>
       </div>
 
       <div class="services-grid">
-
-        <article class="service-card">
-          <div class="service-icon">◇</div>
+        <div class="service-card">
+          <span>✧</span>
           <h3>Personal Assistance</h3>
-          <p>Get help choosing jewellery for your special moments.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">✧</div>
+          <p>Get help exploring jewellery for your special moments.</p>
+        </div>
+        <div class="service-card">
+          <span>◇</span>
           <h3>Bridal Consultation</h3>
-          <p>Explore beautiful jewellery for your wedding celebrations.</p>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">♡</div>
+          <p>Discover beautiful jewellery inspirations for your wedding.</p>
+        </div>
+        <div class="service-card">
+          <span>♡</span>
           <h3>Special Enquiries</h3>
-          <p>Contact us for product details, availability and assistance.</p>
-        </article>
-
+          <p>Talk to our team about your jewellery requirements.</p>
+        </div>
       </div>
     </section>
 
-    <!-- INSTAGRAM -->
-    <section class="instagram-section" id="instagram">
+    <!-- Appointment -->
+    <section class="appointment-section reveal" id="appointment">
       <div class="section-title">
-        <p class="eyebrow">FOLLOW OUR JOURNEY</p>
-        <h2>Follow Us on Instagram</h2>
-        <div class="gold-line"></div>
-        <p>Discover our latest jewellery designs and updates.</p>
-
-        <a class="instagram-button"
-          href="https://www.instagram.com/shree_jewellers_0909/"
-          target="_blank" rel="noopener noreferrer">
-          ◎ FOLLOW @SHREE_JEWELLERS_0909
-        </a>
+        <p class="eyebrow">LET'S MAKE IT SPECIAL</p>
+        <h2>Plan Your <em>Visit</em></h2>
+        <p>Send us your preferred visit details through WhatsApp.</p>
       </div>
+
+      <form id="appointmentForm" class="appointment-form">
+        <label for="customerName">Your name</label>
+        <input id="customerName" type="text" required
+               placeholder="Enter your name">
+
+        <label for="visitDate">Preferred date</label>
+        <input id="visitDate" type="date" required>
+
+        <label for="visitPurpose">Purpose of visit</label>
+        <select id="visitPurpose" required>
+          <option value="">Choose an occasion</option>
+          <option>Wedding shopping</option>
+          <option>Gold jewellery</option>
+          <option>Diamond jewellery</option>
+          <option>Silver jewellery</option>
+          <option>Other enquiry</option>
+        </select>
+
+        <button class="primary-button" type="submit">
+          REQUEST APPOINTMENT →
+        </button>
+      </form>
     </section>
 
-    <!-- CONTACT -->
-    <section class="contact-section" id="contact">
-      <div class="contact-content">
-
-        <p class="eyebrow">WE WOULD LOVE TO HEAR FROM YOU</p>
-
-        <h2>Let's Find Something<br>Beautiful Together</h2>
-
-        <div class="gold-line"></div>
-
-        <p>
-          Have a question about our jewellery or looking for something
-          special? Get in touch with us.
+    <!-- Testimonials -->
+    <section class="testimonial-section reveal">
+      <div class="section-title">
+        <p class="eyebrow">A BEAUTIFUL EXPERIENCE</p>
+        <h2>Words of <em>Appreciation</em></h2>
+      </div>
+      <div class="testimonial-card">
+        <span>★★★★★</span>
+        <p id="testimonialText">
+          Every beautiful piece tells a story. Discover yours at SHREE JEWELLERS.
         </p>
+        <h3 id="testimonialAuthor">SHREE JEWELLERS</h3>
+        <div class="testimonial-controls">
+          <button id="testimonialPrev" aria-label="Previous testimonial">←</button>
+          <button id="testimonialNext" aria-label="Next testimonial">→</button>
+        </div>
+      </div>
+      <p class="gallery-note">Customer reviews can be added here once verified.</p>
+    </section>
+
+    <!-- Instagram -->
+    <section class="instagram-section reveal">
+      <p class="eyebrow">FOLLOW OUR JOURNEY</p>
+      <h2>Stay Inspired with <em>Instagram</em></h2>
+      <p>Discover more jewellery inspirations and updates.</p>
+      <a href="https://www.instagram.com/shree_jewellers_0909/"
+         target="_blank" rel="noopener" class="instagram-button">
+        FOLLOW @SHREE_JEWELLERS_0909 →
+      </a>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section reveal" id="contact">
+      <div class="contact-content">
+        <p class="eyebrow">WE WOULD LOVE TO HEAR FROM YOU</p>
+        <h2>Let's Create<br><em>Beautiful Memories</em></h2>
+        <p>Visit or contact SHREE JEWELLERS for your jewellery enquiries.</p>
 
         <div class="contact-details">
-          <p><strong>SHREE JEWELLERS</strong></p>
-          <p>Rayagada, Odisha, India</p>
-          <p>Phone: +91 94371 41499</p>
+          <p><strong>LOCATION</strong><br>Rayagada, Odisha, India</p>
+          <p><strong>WHATSAPP</strong><br>+91 94371 41499</p>
+          <p><strong>INSTAGRAM</strong><br>@shree_jewellers_0909</p>
         </div>
 
         <div class="contact-buttons">
-          <a class="contact-button"
-            href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS%2C%20I%20would%20like%20to%20enquire%20about%20your%20jewellery."
-            target="_blank" rel="noopener noreferrer">
+          <a href="https://wa.me/919437141499"
+             target="_blank" rel="noopener" class="contact-button">
             CHAT ON WHATSAPP
           </a>
-
-          <a class="contact-button secondary-button"
-            href="tel:+919437141499">
-            CALL US
+          <a href="https://www.google.com/maps/search/?api=1&query=Rayagada%2C+Odisha"
+             target="_blank" rel="noopener" class="contact-button secondary-button">
+            FIND US
           </a>
         </div>
-
-        <a class="map-link"
-          href="https://www.google.com/maps/search/?api=1&query=Jewellery+shops+Rayagada+Odisha"
-          target="_blank" rel="noopener noreferrer">
-          FIND US ON GOOGLE MAPS →
-        </a>
-
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
+  <!-- Footer -->
   <footer class="site-footer">
     <a href="#home" class="footer-brand">SHREE JEWELLERS</a>
     <p>Where Tradition Meets Elegance</p>
-
     <div class="footer-links">
       <a href="#about">About</a>
       <a href="#collections">Collections</a>
       <a href="#rates">Rates</a>
-      <a href="#services">Services</a>
       <a href="#contact">Contact</a>
-      <a href="https://www.instagram.com/shree_jewellers_0909/"
-        target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
-
     <p class="copyright">
       © <span id="currentYear"></span> SHREE JEWELLERS. All Rights Reserved.
     </p>
   </footer>
 
-  <!-- WHATSAPP -->
-  <a class="floating-whatsapp"
-    href="https://wa.me/919437141499?text=Hello%20SHREE%20JEWELLERS"
-    target="_blank" rel="noopener noreferrer"
-    aria-label="Chat with us on WhatsApp">
-    ☏
-  </a>
+  <!-- Product Image Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <button class="lightbox-close" id="lightboxClose"
+            aria-label="Close image">×</button>
+    <img id="lightboxImage" src="" alt="Jewellery enlarged view">
+  </div>
+
+  <!-- Back to Top -->
+  <button class="back-to-top" id="backToTop"
+          aria-label="Back to top">↑</button>
+
+  <!-- Theme Toggle -->
+  <button class="theme-toggle" id="themeToggle"
+          aria-label="Toggle colour theme">☾</button>
+
+  <!-- Floating WhatsApp -->
+  <a href="https://wa.me/919437141499"
+     class="floating-whatsapp" target="_blank" rel="noopener"
+     aria-label="Chat with us on WhatsApp">✆</a>
 
   <script src="script.js"></script>
-
 </body>
 </html>
