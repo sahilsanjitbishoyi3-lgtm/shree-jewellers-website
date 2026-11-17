@@ -1,256 +1,713 @@
 
-/* =========================================
-   SHREE JEWELLERS - COMPLETE WEBSITE JS
-========================================= */
+// =============================================
+// SHREE JEWELLERS — PREMIUM EDITION
+// Complete Interactive JavaScript
+// =============================================
 
-/* MOBILE NAVIGATION */
+document.addEventListener("DOMContentLoaded", () => {
 
-const menuToggle = document.getElementById("menuToggle");
-const mobileNav = document.getElementById("mobileNav");
+  // -------------------------------------------
+  // 1. BASIC SETTINGS
+  // -------------------------------------------
 
-if (menuToggle && mobileNav) {
-  menuToggle.addEventListener("click", () => {
-    const isOpen = mobileNav.classList.toggle("open");
+  const WHATSAPP_NUMBER = "919437141499";
 
-    menuToggle.setAttribute("aria-expanded", String(isOpen));
-    menuToggle.setAttribute(
-      "aria-label",
-      isOpen ? "Close navigation" : "Open navigation"
-    );
-  });
+  const currentYear = document.getElementById("currentYear");
 
-  mobileNav.querySelectorAll("a").forEach(link => {
-    link.addEventListener("click", () => {
-      mobileNav.classList.remove("open");
-      menuToggle.setAttribute("aria-expanded", "false");
-      menuToggle.setAttribute("aria-label", "Open navigation");
-    });
-  });
-}
-
-/* STICKY HEADER */
-
-const siteHeader = document.getElementById("siteHeader");
-
-function updateHeader() {
-  if (siteHeader) {
-    siteHeader.classList.toggle("scrolled", window.scrollY > 30);
+  if (currentYear) {
+    currentYear.textContent = new Date().getFullYear();
   }
-}
 
-window.addEventListener("scroll", updateHeader);
-updateHeader();
+  // -------------------------------------------
+  // 2. STICKY HEADER
+  // -------------------------------------------
 
-/* COPYRIGHT YEAR */
+  const header = document.getElementById("siteHeader");
 
-const currentYear = document.getElementById("currentYear");
+  function updateHeader() {
+    if (header) {
+      header.classList.toggle("scrolled", window.scrollY > 30);
+    }
+  }
 
-if (currentYear) {
-  currentYear.textContent = new Date().getFullYear();
-}
+  window.addEventListener("scroll", updateHeader);
+  updateHeader();
 
-/* VIDEO ROTATION */
+  // -------------------------------------------
+  // 3. MOBILE NAVIGATION
+  // -------------------------------------------
 
-const heroVideo = document.getElementById("heroVideo");
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileNav = document.getElementById("mobileNav");
 
-const jewelleryClips = [
-  "assets/videos/bridal-model.mp4",
-  "assets/videos/bridal-gold.mp4",
-  "assets/videos/gold-diamond-closeup.mp4"
-];
+  if (menuToggle && mobileNav) {
 
-let activeClip = 0;
+    menuToggle.addEventListener("click", () => {
+      const isOpen = mobileNav.classList.toggle("open");
 
-if (heroVideo) {
-  heroVideo.addEventListener("ended", () => {
-    activeClip = (activeClip + 1) % jewelleryClips.length;
-
-    heroVideo.src = jewelleryClips[activeClip];
-    heroVideo.load();
-
-    heroVideo.play().catch(error => {
-      console.warn("Video playback was blocked:", error);
+      menuToggle.setAttribute("aria-expanded", String(isOpen));
+      menuToggle.setAttribute(
+        "aria-label",
+        isOpen ? "Close navigation" : "Open navigation"
+      );
     });
-  });
 
-  heroVideo.addEventListener("error", () => {
-    console.error(
-      "Homepage video failed to load. Check the filename and folder."
-    );
-  });
+    mobileNav.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        mobileNav.classList.remove("open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation");
+      });
+    });
+  }
 
-  heroVideo.play().catch(() => {
-    console.log("Video playback requires a browser action.");
-  });
-}
+  // -------------------------------------------
+  // 4. BACKGROUND MUSIC
+  // -------------------------------------------
 
-/* BACKGROUND MUSIC */
+  const heroMusic = document.getElementById("heroMusic");
+  const musicToggle = document.getElementById("musicToggle");
+  const musicIcon = document.getElementById("musicIcon");
+  const musicText = document.getElementById("musicText");
 
-const heroMusic = document.getElementById("heroMusic");
-const musicToggle = document.getElementById("musicToggle");
+  if (heroMusic && musicToggle) {
 
-if (musicToggle && heroMusic) {
-  musicToggle.addEventListener("click", async () => {
-    if (heroMusic.paused) {
-      try {
-        await heroMusic.play();
-        musicToggle.textContent = "♫ Turn Music Off";
-        musicToggle.setAttribute("aria-pressed", "true");
-      } catch (error) {
-        musicToggle.textContent = "Music unavailable";
-        console.error("Music playback failed:", error);
+    heroMusic.loop = true;
+    heroMusic.volume = 0.35;
+
+    function updateMusicButton(isPlaying) {
+      musicToggle.setAttribute("aria-pressed", String(isPlaying));
+
+      if (musicIcon) {
+        musicIcon.textContent = isPlaying ? "♫" : "♪";
       }
-    } else {
-      heroMusic.pause();
-      musicToggle.textContent = "♫ Turn Music On";
-      musicToggle.setAttribute("aria-pressed", "false");
+
+      if (musicText) {
+        musicText.textContent = isPlaying ? "MUSIC ON" : "MUSIC OFF";
+      }
     }
+
+    updateMusicButton(false);
+
+    musicToggle.addEventListener("click", async () => {
+
+      if (heroMusic.paused) {
+        try {
+          await heroMusic.play();
+          updateMusicButton(true);
+        } catch (error) {
+          updateMusicButton(false);
+          alert("Music could not be played. Please check your audio file.");
+        }
+      } else {
+        heroMusic.pause();
+        updateMusicButton(false);
+      }
+    });
+
+    heroMusic.addEventListener("play", () => updateMusicButton(true));
+    heroMusic.addEventListener("pause", () => updateMusicButton(false));
+  }
+
+  // -------------------------------------------
+  // 5. CINEMATIC VIDEO PLAYBACK
+  // -------------------------------------------
+
+  const heroVideo = document.getElementById("heroVideo");
+
+  const heroVideos = [
+    "assets/videos/bridal-model.mp4",
+    "assets/videos/bridal-gold.mp4",
+    "assets/videos/gold-diamond-closeup.mp4"
+  ];
+
+  if (heroVideo) {
+
+    let currentVideo = 0;
+
+    heroVideo.muted = true;
+    heroVideo.playsInline = true;
+
+    heroVideo.addEventListener("ended", () => {
+      currentVideo = (currentVideo + 1) % heroVideos.length;
+      heroVideo.src = heroVideos[currentVideo];
+      heroVideo.load();
+
+      const playback = heroVideo.play();
+
+      if (playback) {
+        playback.catch(() => {});
+      }
+    });
+
+    heroVideo.addEventListener("error", () => {
+      console.warn("A hero video could not be loaded.");
+    });
+
+    const initialPlayback = heroVideo.play();
+
+    if (initialPlayback) {
+      initialPlayback.catch(() => {});
+    }
+  }
+
+  // -------------------------------------------
+  // 6. PRODUCT SEARCH
+  // -------------------------------------------
+
+  const productSearch = document.getElementById("productSearch");
+  const productCards = [...document.querySelectorAll(".product-card")];
+  const emptyMessage = document.getElementById("emptyMessage");
+
+  let selectedFilter = "all";
+
+  function filterProducts() {
+
+    const searchText = productSearch
+      ? productSearch.value.toLowerCase().trim()
+      : "";
+
+    let visibleCount = 0;
+
+    productCards.forEach(card => {
+
+      const category = card.dataset.category || "";
+      const name = card.dataset.name || "";
+
+      const matchesCategory =
+        selectedFilter === "all" || category === selectedFilter;
+
+      const matchesSearch =
+        name.toLowerCase().includes(searchText) ||
+        category.toLowerCase().includes(searchText);
+
+      const shouldShow = matchesCategory && matchesSearch;
+
+      card.style.display = shouldShow ? "" : "none";
+
+      if (shouldShow) visibleCount++;
+    });
+
+    if (emptyMessage) {
+      emptyMessage.hidden = visibleCount !== 0;
+    }
+  }
+
+  if (productSearch) {
+    productSearch.addEventListener("input", filterProducts);
+  }
+
+  // -------------------------------------------
+  // 7. CATEGORY FILTERS
+  // -------------------------------------------
+
+  const filterButtons = document.querySelectorAll(".filter-btn");
+
+  filterButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      filterButtons.forEach(btn => btn.classList.remove("active"));
+
+      button.classList.add("active");
+
+      selectedFilter = button.dataset.filter || "all";
+
+      filterProducts();
+    });
   });
 
-  heroMusic.addEventListener("error", () => {
-    console.error("Audio file could not load. Check its filename and folder.");
-  });
-}
+  // -------------------------------------------
+  // 8. WISHLIST
+  // -------------------------------------------
 
-/* GOLD AND SILVER RATES */
+  const wishlistItems = document.getElementById("wishlistItems");
+  const wishlistCount = document.getElementById("wishlistCount");
 
-const RATE_API = "https://api.dharun.dev/v1/bullion";
-
-const gold24Element = document.getElementById("gold24");
-const gold22Element = document.getElementById("gold22");
-const silverElement = document.getElementById("silverRate");
-const silverKgElement = document.getElementById("silverKg");
-const rateStatus = document.getElementById("rateStatus");
-const refreshRatesButton = document.getElementById("refreshRates");
-
-function normalizeKey(key) {
-  return String(key).toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
-function findNumericValue(object, possibleKeys) {
-  if (!object || typeof object !== "object") return null;
-
-  const normalizedKeys = possibleKeys.map(normalizeKey);
-
-  for (const [key, value] of Object.entries(object)) {
-    if (
-      normalizedKeys.includes(normalizeKey(key)) &&
-      value !== null &&
-      value !== "" &&
-      Number.isFinite(Number(value))
-    ) {
-      return Number(value);
-    }
-  }
-
-  for (const value of Object.values(object)) {
-    if (value && typeof value === "object") {
-      const found = findNumericValue(value, possibleKeys);
-      if (found !== null) return found;
-    }
-  }
-
-  return null;
-}
-
-function formatRupees(value) {
-  if (value === null || !Number.isFinite(value)) {
-    return "Unavailable";
-  }
-
-  return "₹" + value.toLocaleString("en-IN", {
-    maximumFractionDigits: 2
-  });
-}
-
-async function loadMetalRates() {
-  if (!rateStatus) return;
-
-  if (refreshRatesButton) {
-    refreshRatesButton.disabled = true;
-    refreshRatesButton.textContent = "Checking...";
-  }
-
-  rateStatus.textContent = "Checking latest available rates...";
+  let wishlist = [];
 
   try {
-    const response = await fetch(RATE_API, {
-      method: "GET",
-      headers: { "Accept": "application/json" },
-      cache: "no-store"
-    });
-
-    if (!response.ok) {
-      throw new Error("Rate provider returned an error.");
-    }
-
-    const data = await response.json();
-
-    const gold24 = findNumericValue(data, [
-      "gold24", "gold24k", "gold_24k",
-      "24k", "gold_999", "gold999"
-    ]);
-
-    const gold22 = findNumericValue(data, [
-      "gold22", "gold22k", "gold_22k",
-      "22k", "gold_916", "gold916"
-    ]);
-
-    const silver = findNumericValue(data, [
-      "silver", "silver999", "silver_999", "silver_rate"
-    ]);
-
-    /*
-      IMPORTANT:
-      This example requires the API to return INR per gram.
-      Do not show a value unless the provider's units and
-      response format have been confirmed.
-    */
-
-    if (gold24 === null || gold22 === null || silver === null) {
-      throw new Error("Rate data format could not be verified.");
-    }
-
-    if (gold24 <= 0 || gold22 <= 0 || silver <= 0) {
-      throw new Error("Invalid rate values.");
-    }
-
-    gold24Element.textContent = formatRupees(gold24);
-    gold22Element.textContent = formatRupees(gold22);
-    silverElement.textContent = formatRupees(silver);
-    silverKgElement.textContent = "Per kg: " + formatRupees(silver * 1000);
-
-    rateStatus.textContent =
-      "Rates checked: " + new Date().toLocaleString("en-IN");
-
+    wishlist = JSON.parse(localStorage.getItem("shreeWishlist")) || [];
   } catch (error) {
-    console.error("Metal rate error:", error);
+    wishlist = [];
+  }
 
-    if (gold24Element) gold24Element.textContent = "Unavailable";
-    if (gold22Element) gold22Element.textContent = "Unavailable";
-    if (silverElement) silverElement.textContent = "Unavailable";
-    if (silverKgElement) silverKgElement.textContent = "Per kg: Unavailable";
-
-    rateStatus.textContent =
-      "Live rates unavailable. Please check again later.";
-  } finally {
-    if (refreshRatesButton) {
-      refreshRatesButton.disabled = false;
-      refreshRatesButton.textContent = "↻ Refresh Rates";
+  function saveWishlist() {
+    try {
+      localStorage.setItem("shreeWishlist", JSON.stringify(wishlist));
+    } catch (error) {
+      console.warn("Wishlist could not be saved.");
     }
   }
-}
 
-/* RATE BUTTON */
+  function renderWishlist() {
 
-if (refreshRatesButton) {
-  refreshRatesButton.addEventListener("click", loadMetalRates);
-}
+    if (!wishlistItems || !wishlistCount) return;
 
-/* INITIAL RATE LOAD */
+    wishlistCount.textContent = `(${wishlist.length})`;
 
-loadMetalRates();
+    wishlistItems.innerHTML = "";
 
-/* AUTOMATIC HOURLY REFRESH */
+    if (wishlist.length === 0) {
+      wishlistItems.innerHTML =
+        '<p class="empty-wishlist">Your wishlist is waiting for something beautiful.</p>';
+      return;
+    }
 
-setInterval(loadMetalRates, 60 * 60 * 1000);
+    wishlist.forEach(item => {
+
+      const card = document.createElement("div");
+      card.className = "wishlist-item";
+
+      const image = document.createElement("img");
+      image.src = item.image;
+      image.alt = item.name;
+
+      const details = document.createElement("div");
+
+      const title = document.createElement("h4");
+      title.textContent = item.name;
+
+      const remove = document.createElement("button");
+      remove.className = "wishlist-remove";
+      remove.textContent = "REMOVE ♡";
+
+      remove.addEventListener("click", () => {
+        wishlist = wishlist.filter(product => product.id !== item.id);
+        saveWishlist();
+        renderWishlist();
+        updateWishlistButtons();
+      });
+
+      details.append(title, remove);
+      card.append(image, details);
+      wishlistItems.appendChild(card);
+    });
+  }
+
+  function updateWishlistButtons() {
+
+    document.querySelectorAll(".product-card").forEach(card => {
+
+      const button = card.querySelector(".wishlist-btn");
+
+      if (!button) return;
+
+      const id = card.dataset.name;
+
+      const isSaved = wishlist.some(item => item.id === id);
+
+      button.classList.toggle("active", isSaved);
+      button.textContent = isSaved ? "♥" : "♡";
+      button.setAttribute(
+        "aria-label",
+        isSaved ? "Remove from wishlist" : "Add to wishlist"
+      );
+    });
+  }
+
+  document.querySelectorAll(".product-card").forEach(card => {
+
+    const button = card.querySelector(".wishlist-btn");
+
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+
+      const id = card.dataset.name;
+      const image = card.querySelector("img")?.src || "";
+
+      const existing = wishlist.find(item => item.id === id);
+
+      if (existing) {
+        wishlist = wishlist.filter(item => item.id !== id);
+      } else {
+        wishlist.push({
+          id,
+          name: id,
+          image
+        });
+      }
+
+      saveWishlist();
+      renderWishlist();
+      updateWishlistButtons();
+    });
+  });
+
+  renderWishlist();
+  updateWishlistButtons();
+
+  // -------------------------------------------
+  // 9. PRODUCT IMAGE ZOOM
+  // -------------------------------------------
+
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const lightboxClose = document.getElementById("lightboxClose");
+
+  function closeLightbox() {
+    if (!lightbox) return;
+
+    lightbox.classList.remove("open");
+    lightbox.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".product-image").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      if (!lightbox || !lightboxImage) return;
+
+      const imagePath = button.dataset.image;
+
+      if (!imagePath) return;
+
+      lightboxImage.src = imagePath;
+
+      lightbox.classList.add("open");
+      lightbox.setAttribute("aria-hidden", "false");
+
+      document.body.style.overflow = "hidden";
+    });
+  });
+
+  if (lightboxClose) {
+    lightboxClose.addEventListener("click", closeLightbox);
+  }
+
+  if (lightbox) {
+
+    lightbox.addEventListener("click", event => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+  }
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") closeLightbox();
+  });
+
+  // -------------------------------------------
+  // 10. WHATSAPP PRODUCT ENQUIRY
+  // -------------------------------------------
+
+  document.querySelectorAll(".enquiry-btn").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const product = button.dataset.product || "Jewellery";
+
+      const message =
+        `Hello SHREE JEWELLERS! I am interested in ${product}. Please share more details and availability.`;
+
+      const url =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+  });
+
+  // -------------------------------------------
+  // 11. GIFT FINDER
+  // -------------------------------------------
+
+  document.querySelectorAll("[data-gift]").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const occasion = button.dataset.gift;
+
+      const message =
+        `Hello SHREE JEWELLERS! I am looking for a jewellery gift for ${occasion}. Please suggest some designs.`;
+
+      const url =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+  });
+
+  // -------------------------------------------
+  // 12. APPOINTMENT FORM
+  // -------------------------------------------
+
+  const appointmentForm = document.getElementById("appointmentForm");
+  const visitDate = document.getElementById("visitDate");
+
+  if (visitDate) {
+    const today = new Date();
+    const localToday = new Date(
+      today.getTime() - today.getTimezoneOffset() * 60000
+    ).toISOString().split("T")[0];
+
+    visitDate.min = localToday;
+  }
+
+  if (appointmentForm) {
+
+    appointmentForm.addEventListener("submit", event => {
+
+      event.preventDefault();
+
+      const name = document.getElementById("customerName").value.trim();
+      const date = visitDate.value;
+      const purpose = document.getElementById("visitPurpose").value;
+
+      if (!name || !date || !purpose) {
+        alert("Please fill in all appointment details.");
+        return;
+      }
+
+      if (date < visitDate.min) {
+        alert("Please select today or a future date.");
+        return;
+      }
+
+      const message =
+        `Hello SHREE JEWELLERS!\n\nI would like to request a store visit.\n\nName: ${name}\nPreferred Date: ${date}\nPurpose: ${purpose}\n\nPlease confirm availability.`;
+
+      const url =
+        `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+      window.open(url, "_blank", "noopener,noreferrer");
+    });
+  }
+
+  // -------------------------------------------
+  // 13. TESTIMONIAL SLIDER
+  // -------------------------------------------
+
+  const testimonials = [
+    {
+      text: "Every beautiful piece tells a story. Discover yours at SHREE JEWELLERS.",
+      author: "SHREE JEWELLERS"
+    },
+    {
+      text: "Tradition, elegance and beauty come together in every special moment.",
+      author: "SHREE JEWELLERS"
+    },
+    {
+      text: "Celebrate your precious moments with timeless jewellery.",
+      author: "SHREE JEWELLERS"
+    }
+  ];
+
+  let testimonialIndex = 0;
+
+  const testimonialText = document.getElementById("testimonialText");
+  const testimonialAuthor = document.getElementById("testimonialAuthor");
+
+  function showTestimonial() {
+
+    if (!testimonialText || !testimonialAuthor) return;
+
+    testimonialText.textContent = testimonials[testimonialIndex].text;
+    testimonialAuthor.textContent = testimonials[testimonialIndex].author;
+  }
+
+  function changeTestimonial(direction) {
+
+    testimonialIndex =
+      (testimonialIndex + direction + testimonials.length) %
+      testimonials.length;
+
+    showTestimonial();
+  }
+
+  document.getElementById("testimonialPrev")?.addEventListener(
+    "click",
+    () => changeTestimonial(-1)
+  );
+
+  document.getElementById("testimonialNext")?.addEventListener(
+    "click",
+    () => changeTestimonial(1)
+  );
+
+  // -------------------------------------------
+  // 14. DARK / LIGHT MODE
+  // -------------------------------------------
+
+  const themeToggle = document.getElementById("themeToggle");
+
+  let savedTheme = "light";
+
+  try {
+    savedTheme = localStorage.getItem("shreeTheme") || "light";
+  } catch (error) {
+    savedTheme = "light";
+  }
+
+  function applyTheme(theme) {
+
+    const isDark = theme === "dark";
+
+    document.body.classList.toggle("dark-mode", isDark);
+
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? "☀" : "☾";
+      themeToggle.setAttribute(
+        "aria-label",
+        isDark ? "Switch to light mode" : "Switch to dark mode"
+      );
+    }
+  }
+
+  applyTheme(savedTheme);
+
+  if (themeToggle) {
+
+    themeToggle.addEventListener("click", () => {
+
+      const nextTheme = document.body.classList.contains("dark-mode")
+        ? "light"
+        : "dark";
+
+      applyTheme(nextTheme);
+
+      try {
+        localStorage.setItem("shreeTheme", nextTheme);
+      } catch (error) {
+        console.warn("Theme preference could not be saved.");
+      }
+    });
+  }
+
+  // -------------------------------------------
+  // 15. SCROLL REVEAL ANIMATIONS
+  // -------------------------------------------
+
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+
+    const revealObserver = new IntersectionObserver(entries => {
+
+      entries.forEach(entry => {
+
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+
+    }, {
+      threshold: 0.12
+    });
+
+    revealElements.forEach(element => {
+      revealObserver.observe(element);
+    });
+
+  } else {
+
+    revealElements.forEach(element => {
+      element.classList.add("visible");
+    });
+  }
+
+  // -------------------------------------------
+  // 16. BACK TO TOP
+  // -------------------------------------------
+
+  const backToTop = document.getElementById("backToTop");
+
+  function updateBackToTop() {
+
+    if (!backToTop) return;
+
+    backToTop.classList.toggle("visible", window.scrollY > 500);
+  }
+
+  window.addEventListener("scroll", updateBackToTop);
+  updateBackToTop();
+
+  if (backToTop) {
+
+    backToTop.addEventListener("click", () => {
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    });
+  }
+
+  // -------------------------------------------
+  // 17. RECENTLY VIEWED PRODUCTS
+  // -------------------------------------------
+
+  const recentlyViewed = [];
+
+  document.querySelectorAll(".product-image").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const card = button.closest(".product-card");
+
+      if (!card) return;
+
+      const name = card.dataset.name;
+
+      if (!name) return;
+
+      const existingIndex = recentlyViewed.indexOf(name);
+
+      if (existingIndex !== -1) {
+        recentlyViewed.splice(existingIndex, 1);
+      }
+
+      recentlyViewed.unshift(name);
+
+      if (recentlyViewed.length > 5) {
+        recentlyViewed.pop();
+      }
+
+      try {
+        sessionStorage.setItem(
+          "shreeRecentlyViewed",
+          JSON.stringify(recentlyViewed)
+        );
+      } catch (error) {
+        console.warn("Recently viewed list could not be saved.");
+      }
+    });
+  });
+
+  // -------------------------------------------
+  // 18. GOLD AND SILVER RATE PLACEHOLDER
+  // -------------------------------------------
+
+  const refreshRates = document.getElementById("refreshRates");
+  const rateStatus = document.getElementById("rateStatus");
+
+  if (refreshRates) {
+
+    refreshRates.addEventListener("click", () => {
+
+      if (rateStatus) {
+        rateStatus.textContent =
+          "Live market data source is not connected yet. Please contact the store for today's rates.";
+      }
+
+    });
+  }
+
+  // -------------------------------------------
+  // 19. IMAGE ERROR HANDLING
+  // -------------------------------------------
+
+  document.querySelectorAll("img").forEach(image => {
+
+    image.addEventListener("error", () => {
+      image.classList.add("image-error");
+      console.warn("Image could not be loaded:", image.src);
+    });
+  });
+
+  console.log("SHREE JEWELLERS website loaded successfully.");
+
+});
