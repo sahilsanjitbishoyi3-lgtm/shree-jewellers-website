@@ -63,7 +63,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // -------------------------------------------
   // 4. BACKGROUND MUSIC
-  // -------------------------------------------
+  // Autoplay with sound is restricted by browsers. Try immediately,
+  // then retry on the visitor's first tap/click/key press.
 
   const heroMusic = document.getElementById("heroMusic");
   const musicToggle = document.getElementById("musicToggle");
@@ -71,45 +72,67 @@ document.addEventListener("DOMContentLoaded", () => {
   const musicText = document.getElementById("musicText");
 
   if (heroMusic && musicToggle) {
-
     heroMusic.loop = true;
-    heroMusic.volume = 0.35;
+    heroMusic.volume = 0.45;
 
-    function updateMusicButton(isPlaying) {
-      musicToggle.setAttribute("aria-pressed", String(isPlaying));
+    let userTurnedMusicOff = false;
 
-      if (musicIcon) {
-        musicIcon.textContent = isPlaying ? "♫" : "♪";
-      }
+    function updateMusicButton(playing) {
+      musicToggle.setAttribute("aria-pressed", String(playing));
+      if (musicIcon) musicIcon.textContent = playing ? "♫" : "♪";
+      if (musicText) musicText.textContent = playing ? "MUSIC ON" : "MUSIC OFF";
+    }
 
-      if (musicText) {
-        musicText.textContent = isPlaying ? "MUSIC ON" : "MUSIC OFF";
+    async function startBackgroundMusic() {
+      if (userTurnedMusicOff || !heroMusic.paused) return;
+      try {
+        await heroMusic.play();
+        updateMusicButton(true);
+      } catch (error) {
+        updateMusicButton(false);
+        // The browser may require a direct visitor gesture before audio.
       }
     }
 
     updateMusicButton(false);
+    startBackgroundMusic();
+
+    const unlockMusic = () => {
+      startBackgroundMusic();
+      document.removeEventListener("pointerdown", unlockMusic);
+      document.removeEventListener("keydown", unlockMusic);
+      document.removeEventListener("touchstart", unlockMusic);
+    };
+    document.addEventListener("pointerdown", unlockMusic, { once: true });
+    document.addEventListener("keydown", unlockMusic, { once: true });
+    document.addEventListener("touchstart", unlockMusic, { once: true, passive: true });
 
     musicToggle.addEventListener("click", async () => {
-
-      if (heroMusic.paused) {
-        try {
-          await heroMusic.play();
-          updateMusicButton(true);
-        } catch (error) {
-          updateMusicButton(false);
-          alert("Music could not be played. Please check your audio file.");
-        }
-      } else {
+      if (!heroMusic.paused) {
+        userTurnedMusicOff = true;
         heroMusic.pause();
         updateMusicButton(false);
+        return;
+      }
+
+      userTurnedMusicOff = false;
+      try {
+        await heroMusic.play();
+        updateMusicButton(true);
+      } catch (error) {
+        updateMusicButton(false);
+        alert("Please check your device volume and confirm the music file is available.");
       }
     });
 
     heroMusic.addEventListener("play", () => updateMusicButton(true));
     heroMusic.addEventListener("pause", () => updateMusicButton(false));
+    heroMusic.addEventListener("error", () => {
+      updateMusicButton(false);
+      console.error("Background audio failed to load:", heroMusic.currentSrc);
+    });
   }
 
-  // -------------------------------------------
   // 5. CINEMATIC VIDEO PLAYBACK
   // -------------------------------------------
 
